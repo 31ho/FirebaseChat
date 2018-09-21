@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
+        
         <EditText
             android:id="@+id/main_chat_edittext"
             android:layout_width="match_parent"
