@@ -6,6 +6,8 @@ public class Data {
     String message;
     String time;
 
+    public Data(){}
+
     public Data(String name, String message, String time){
         user_name = name;
         this.message = message;
@@ -16,23 +18,11 @@ public class Data {
         return user_name;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
-    }
-
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getTime() {
         return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 }

@@ -22,4 +22,6 @@ public class MessageHolder extends RecyclerView.ViewHolder {
     public void bindView(String text){
         textView.setText(text);
     }
+
 }
+
