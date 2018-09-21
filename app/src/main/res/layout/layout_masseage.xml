@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
+    android:orientation="horizontal"
+    android:background="#ffffff"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/holder_message"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="2"
+        android:maxLines="100"
+        android:text="Stack Over Flow"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="50sp"
+        android:gravity="center_vertical"/>
+
+</LinearLayout>

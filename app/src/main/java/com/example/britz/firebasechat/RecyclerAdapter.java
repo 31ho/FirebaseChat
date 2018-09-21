@@ -14,7 +14,16 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter {
 
+    Data data;
     ArrayList<Data> data_list;
+    MessageHolder holder;
+
+    public  RecyclerAdapter(){}
+
+    public  RecyclerAdapter(Data data){
+        this.data = data;
+    }
+
 
     public RecyclerAdapter (ArrayList<Data> data_list){
         this.data_list = data_list;
@@ -30,11 +39,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+        this.holder = (MessageHolder) holder;
+        this.holder.bindView(data_list.get(position).getMessage());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data_list.size();
     }
 }
