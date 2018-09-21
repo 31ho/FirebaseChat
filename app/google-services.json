@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "54625325466-61tlook815ugl1c244sifv7gomf6hbb3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.britz.firebasechat",
+            "certificate_hash": "e17463c66197f24c24c1b77726e5815d7fab1798"
+          }
+        },
+        {
           "client_id": "54625325466-6tfjf6186ngkidg6u0ktetrbkld3nqk1.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54625325466-6tfjf6186ngkidg6u0ktetrbkld3nqk1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
