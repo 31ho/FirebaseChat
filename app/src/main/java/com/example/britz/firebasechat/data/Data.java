@@ -5,10 +5,12 @@ public class Data {
     String user_name;
     String message;
     String time;
+    String google_ad_id;
 
     public Data(){}
 
-    public Data(String name, String message, String time){
+    public Data(String google_ad_id, String name, String message, String time){
+        this.google_ad_id = google_ad_id;
         user_name = name;
         this.message = message;
         this.time = time;
@@ -24,5 +26,9 @@ public class Data {
 
     public String getTime() {
         return time;
+    }
+
+    public String getGoogle_ad_id() {
+        return google_ad_id;
     }
 }

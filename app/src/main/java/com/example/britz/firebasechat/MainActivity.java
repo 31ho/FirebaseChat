@@ -1,24 +1,25 @@
 package com.example.britz.firebasechat;
 
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.britz.firebasechat.data.Data;
+import com.example.britz.firebasechat.data.Pref;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,22 +28,22 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Data> list;
     RecyclerAdapter adapter;
+    RecyclerView recyclerView;
     EditText editText;
-
+    Pref pref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
+        pref = Pref.getInstance(this);
         list = new ArrayList<Data>();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_recycler);
+        recyclerView = (RecyclerView) findViewById(R.id.main_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        adapter = new RecyclerAdapter(list);
+        adapter = new RecyclerAdapter(this, list);
         recyclerView.setAdapter(adapter);
 
         editText = (EditText) findViewById(R.id.main_chat_edittext);
@@ -50,9 +51,13 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Data data = new Data("ho",editText.getText().toString(),"11:00");
-                list.add(data);
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String nowTime = df.format(c.getTime());
+                Data data = new Data(pref.getGoogleAdId(), pref.getUserName(), editText.getText().toString(), nowTime);
+
                 databaseReference.child("data").push().setValue(data);
+                editText.setText("");
             }
         });
 
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     Data data = dataSnapshot.getValue(Data.class);
                     list.add(data);
                     adapter.notifyDataSetChanged();
+                    recyclerView.smoothScrollToPosition(list.size() - 1);
             }
 
             @Override
@@ -84,5 +90,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        if (Build.VERSION.SDK_INT >= 11) {
+            recyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v,
+                                           int left, int top, int right, int bottom,
+                                           int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    if (bottom < oldBottom) {
+                        recyclerView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                recyclerView.smoothScrollToPosition(list.size());
+                            }
+                        }, 100);
+                    }
+                }
+            });
+        }
     }
 }
